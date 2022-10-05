@@ -9,14 +9,6 @@ module.exports = {
         moduleNameMapper: {
           "\\.(css|scss)$": "<rootDir>/__mocks__/styleMock.js",
         },
-        coverageThreshold: {
-          global: {
-            branches: 85,
-            functions: 83,
-            lines: 93,
-            statements: 92,
-          },
-        },
       },
       {
         displayName: "server",
