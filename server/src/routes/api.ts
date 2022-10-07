@@ -1,19 +1,16 @@
-export const startGame = (
-  req: Express.Request,
-  res: Express.Response
-): void => {};
+import {
+  getCurrentScore,
+  resetGame,
+  startGame,
+  submitAnswer,
+} from "./handlers/api";
+import { Router } from "express";
 
-export const submitAnswer = (
-  req: Express.Request,
-  res: Express.Response
-): void => {};
+export const apiRoutes = Router();
 
-export const getCurrentScore = (
-  req: Express.Request,
-  res: Express.Response
-): void => {};
+apiRoutes.post("/api/start-game", startGame);
+apiRoutes.post("/api/submit-answer", submitAnswer);
+apiRoutes.get("/api/score", getCurrentScore);
+apiRoutes.post("/api/reset", resetGame);
 
-export const resetGame = (
-  req: Express.Request,
-  res: Express.Response
-): void => {};
+export default apiRoutes;
