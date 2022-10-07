@@ -118,3 +118,127 @@ describe("Start game", () => {
     server.close();
   });
 });
+
+describe("Reset game", () => {
+  it("Resets the user data for the supplied uuid to default values", (done) => {
+    const testUuid = "bdb47738-eade-4312-b063-6cff2a95709a";
+    request(app)
+      .post("/api/reset-game")
+      .send({ uuid: testUuid })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done();
+        expect(JSON.parse(res.text)).toEqual(
+          expect.objectContaining({
+            [testUuid]: expect.objectContaining({
+              score: 0,
+              round: 0,
+              rounds: expect.any(Array),
+            }),
+          })
+        );
+        done();
+      });
+  });
+  it("Defaults to creating a new game instance if the provided uuid does not exist", (done) => {
+    const testUuid = "a09cfc9d-8a32-46bf-b98e-30352fbfe8b0";
+    request(app)
+      .post("/api/reset-game")
+      .send({ uuid: testUuid })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done();
+        expect(JSON.parse(res.text)).toEqual(
+          expect.objectContaining({
+            [testUuid]: expect.objectContaining({
+              score: 0,
+              round: 0,
+              rounds: expect.any(Array),
+            }),
+          })
+        );
+        done();
+      });
+  });
+});
+
+describe("Get current score", () => {
+  it("Fetches the score for the current user", (done) => {
+    const testUuid = "bdb47738-eade-4312-b063-6cff2a95709a";
+    request(app)
+      .get("/api/score")
+      .query({ uuid: testUuid })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res).toEqual(testUserData[testUuid].score);
+        done();
+      });
+  });
+  it("Should send back a 0 if the user cannot be found in the cache", (done) => {
+    const testUuid = "a09cfc9d-8a32-46bf-b98e-30352fbfe8b0";
+    request(app)
+      .get("/api/score")
+      .query({ uuid: testUuid })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res).toEqual(0);
+        done();
+      });
+  });
+});
+
+describe("Submit answer", () => {
+  it("Updates the score and sends back a positive message if the user picked the correct answer", (done) => {
+    const testUuid = "bdb47738-eade-4312-b063-6cff2a95709a";
+    const answer = "Alladin";
+    request(app)
+      .post("/api/submit-answer")
+      .send({
+        round: testUserData[testUuid].rounds[testUserData[testUuid].round],
+        answer: answer,
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res).toEqual(
+          expect.objectContaining({
+            userData: expect.objectContaining({
+              score: testUserData[testUuid].score + 1,
+              round: testUserData[testUuid].round,
+              rounds: testUserData[testUuid].rounds,
+            }),
+            correct: true,
+          })
+        );
+        done();
+      });
+  });
+
+  it("Score does not change and negative message is sent back if the user picked the wrong answer", (done) => {
+    const testUuid = "bdb47738-eade-4312-b063-6cff2a95709a";
+    const answer = "Tangled";
+    request(app)
+      .post("/api/submit-answer")
+      .send({
+        round: testUserData[testUuid].rounds[testUserData[testUuid].round],
+        answer: answer,
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res).toEqual(
+          expect.objectContaining({
+            userData: expect.objectContaining({
+              score: testUserData[testUuid].score,
+              round: testUserData[testUuid].round,
+              rounds: testUserData[testUuid].rounds,
+            }),
+            correct: false,
+          })
+        );
+        done();
+      });
+  });
+});
