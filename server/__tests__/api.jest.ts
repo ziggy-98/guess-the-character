@@ -5,17 +5,29 @@ import {
 } from "../src/routes/helpers";
 import testCharacterData from "./testCharacterData.json";
 import testUserData from "./testUserData.json";
-import app from "../src/index";
+import app, { cache } from "../src/index";
 import { CharacterList } from "../src/types";
 import request from "supertest";
+import NodeCache from "node-cache";
 
 let server: any;
 
-describe("Start game", () => {
-  beforeEach(() => {
-    server = app;
-  });
+beforeEach(() => {
+  server = app;
+  cache.mset(
+    (Object.keys(testUserData) as Array<keyof typeof testUserData>).reduce<
+      NodeCache.ValueSetItem[]
+    >((acc, currentUserDataObj) => {
+      acc.push({
+        key: currentUserDataObj,
+        val: testUserData[currentUserDataObj],
+      });
+      return acc;
+    }, [])
+  );
+});
 
+describe("Start game", () => {
   it("Fetches a list of characters", () => {
     return getCharacters()
       .then((res) => {
@@ -80,7 +92,7 @@ describe("Start game", () => {
 
   it("Populates game data for a new user when the user makes a call to /api/start-game", (done) => {
     const testUuid = "a09cfc9d-8a32-46bf-b98e-30352fbfe8b0";
-    request(app)
+    request(server)
       .post("/api/start-game")
       .send({ uuid: testUuid })
       .expect(200)
@@ -103,7 +115,7 @@ describe("Start game", () => {
     const testUuid = "bdb47738-eade-4312-b063-6cff2a95709a";
     const testUserDataObject =
       testUserData["bdb47738-eade-4312-b063-6cff2a95709a"];
-    request(app)
+    request(server)
       .post("/api/start-game")
       .send({ uuid: testUuid })
       .expect(200)
@@ -113,17 +125,13 @@ describe("Start game", () => {
         done();
       });
   });
-
-  afterEach(() => {
-    server.close();
-  });
 });
 
 describe("Reset game", () => {
   it("Resets the user data for the supplied uuid to default values", (done) => {
     const testUuid = "bdb47738-eade-4312-b063-6cff2a95709a";
-    request(app)
-      .post("/api/reset-game")
+    request(server)
+      .post("/api/reset")
       .send({ uuid: testUuid })
       .expect(200)
       .end((err, res) => {
@@ -142,8 +150,8 @@ describe("Reset game", () => {
   });
   it("Defaults to creating a new game instance if the provided uuid does not exist", (done) => {
     const testUuid = "a09cfc9d-8a32-46bf-b98e-30352fbfe8b0";
-    request(app)
-      .post("/api/reset-game")
+    request(server)
+      .post("/api/reset")
       .send({ uuid: testUuid })
       .expect(200)
       .end((err, res) => {
@@ -165,25 +173,25 @@ describe("Reset game", () => {
 describe("Get current score", () => {
   it("Fetches the score for the current user", (done) => {
     const testUuid = "bdb47738-eade-4312-b063-6cff2a95709a";
-    request(app)
+    request(server)
       .get("/api/score")
       .query({ uuid: testUuid })
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res).toEqual(testUserData[testUuid].score);
+        expect(parseInt(res.text)).toEqual(testUserData[testUuid].score);
         done();
       });
   });
   it("Should send back a 0 if the user cannot be found in the cache", (done) => {
     const testUuid = "a09cfc9d-8a32-46bf-b98e-30352fbfe8b0";
-    request(app)
+    request(server)
       .get("/api/score")
       .query({ uuid: testUuid })
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res).toEqual(0);
+        expect(parseInt(res.text)).toEqual(0);
         done();
       });
   });
@@ -193,16 +201,17 @@ describe("Submit answer", () => {
   it("Updates the score and sends back a positive message if the user picked the correct answer", (done) => {
     const testUuid = "bdb47738-eade-4312-b063-6cff2a95709a";
     const answer = "Alladin";
-    request(app)
-      .post("/api/submit-answer")
+    request(server)
+      .patch("/api/submit-answer")
       .send({
+        uuid: testUuid,
         round: testUserData[testUuid].rounds[testUserData[testUuid].round],
         answer: answer,
       })
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res).toEqual(
+        expect(JSON.parse(res.text)).toEqual(
           expect.objectContaining({
             userData: expect.objectContaining({
               score: testUserData[testUuid].score + 1,
@@ -219,16 +228,17 @@ describe("Submit answer", () => {
   it("Score does not change and negative message is sent back if the user picked the wrong answer", (done) => {
     const testUuid = "bdb47738-eade-4312-b063-6cff2a95709a";
     const answer = "Tangled";
-    request(app)
-      .post("/api/submit-answer")
+    request(server)
+      .patch("/api/submit-answer")
       .send({
+        uuid: testUuid,
         round: testUserData[testUuid].rounds[testUserData[testUuid].round],
         answer: answer,
       })
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res).toEqual(
+        expect(JSON.parse(res.text)).toEqual(
           expect.objectContaining({
             userData: expect.objectContaining({
               score: testUserData[testUuid].score,
@@ -241,4 +251,8 @@ describe("Submit answer", () => {
         done();
       });
   });
+});
+
+afterEach(() => {
+  server.close();
 });
