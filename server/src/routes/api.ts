@@ -9,7 +9,7 @@ import { Router } from "express";
 export const apiRoutes = Router();
 
 apiRoutes.post("/api/start-game", startGame);
-apiRoutes.post("/api/submit-answer", submitAnswer);
+apiRoutes.patch("/api/submit-answer", submitAnswer);
 apiRoutes.get("/api/score", getCurrentScore);
 apiRoutes.post("/api/reset", resetGame);
 
