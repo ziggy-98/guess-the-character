@@ -7,20 +7,6 @@ import testUserData from "../__tests__/testUserData.json";
 
 export const app = express();
 export const cache = new NodeCache({ stdTTL: 86400 });
-if (process.env.NODE_ENV === "test") {
-  cache.mset(
-    (Object.keys(testUserData) as Array<keyof typeof testUserData>).reduce(
-      (acc, currentUserDataObj) => {
-        acc.push({
-          key: currentUserDataObj,
-          val: testUserData[currentUserDataObj],
-        });
-        return acc;
-      },
-      []
-    )
-  );
-}
 const port = 3000;
 
 nunjucks.configure(path.resolve(__dirname, "views"), {
