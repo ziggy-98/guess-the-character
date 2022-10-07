@@ -7,6 +7,7 @@ export interface Character {
   tvShows: string[];
   videoGames: string[];
   parkAttractions: string[];
+  imageUrl: string;
   allies: string[];
   enemies: string[];
 }
