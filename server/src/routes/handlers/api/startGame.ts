@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { cache } from "../../index";
-import { createUserGameData } from "../helpers";
+import { cache } from "../../../index";
+import { createUserGameData } from "../../helpers";
 
 export const startGame = (req: Request, res: Response): void => {
   if (req.body.uuid) {
@@ -19,9 +19,3 @@ export const startGame = (req: Request, res: Response): void => {
     res.redirect("/error");
   }
 };
-
-export const submitAnswer = (req: Request, res: Response): void => {};
-
-export const getCurrentScore = (req: Request, res: Response): void => {};
-
-export const resetGame = (req: Request, res: Response): void => {};
