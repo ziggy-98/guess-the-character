@@ -3,9 +3,9 @@ import {
   createUserGameData,
   getCharacters,
 } from "../src/routes/helpers";
-import testCharacterData from "./testCharacterData.json";
-import testUserData from "./testUserData.json";
-import app, { cache } from "../src/index";
+import testCharacterData from "./data/testCharacterData.json";
+import testUserData from "./data/testUserData.json";
+import app, { cache } from "../index";
 import { CharacterList } from "../src/types";
 import request from "supertest";
 import NodeCache from "node-cache";

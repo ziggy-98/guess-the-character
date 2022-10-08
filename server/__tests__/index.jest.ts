@@ -1,4 +1,4 @@
-import app from "../src/index";
+import app from "../index";
 import request from "supertest";
 
 let server: any;
