@@ -8,6 +8,7 @@
         "sourceMap": true,
         "outDir": "dist",
         "baseUrl": ".",
+        "jsx": "react-jsx",
         "resolveJsonModule": true,
         "paths": {
             "*": [
@@ -17,7 +18,11 @@
         "typeRoots": ["./node_modules/@types", "./server/src/typings"]
     },
     "include": [
-        "server/**/*",
-        "client/**/*"
+        "server",
+        "client"
+    ],
+    "exclude": [
+        "**/*.jest.**",
+        "**/__tests__/data"
     ]
 }
