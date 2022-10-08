@@ -253,6 +253,53 @@ describe("Submit answer", () => {
   });
 });
 
+describe("Get Round", () => {
+  it("Should return the current round if a valid uuid has been supplied", (done) => {
+    const testUuid = "bdb47738-eade-4312-b063-6cff2a95709a";
+    const testRound = testUserData[testUuid].rounds[3];
+    request(server)
+      .get("/api/round")
+      .query({ uuid: testUuid })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done();
+        expect(JSON.parse(res.text)).toEqual(
+          expect.objectContaining({
+            character: {
+              name: testRound.character.name,
+              image: testRound.character.image,
+            },
+            options: testRound.options,
+            correctAnswer: testRound.correctAnswer,
+          })
+        );
+        done();
+      });
+  });
+  it("Should return an empty object if no uuid is supplied", (done) => {
+    request(server)
+      .get("/api/round")
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done();
+        expect(JSON.parse(res.text)).toEqual(expect.objectContaining({}));
+        done();
+      });
+  });
+  it("Should return an empty object if a uuid is supplied that doesn't exist", (done) => {
+    const testUuid = "a09cfc9d-8a32-46bf-b98e-30352fbfe8b0";
+    request(server)
+      .get("/api/round")
+      .query({ uuid: testUuid })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done();
+        expect(JSON.parse(res.text)).toEqual(expect.objectContaining({}));
+        done();
+      });
+  });
+});
+
 afterEach(() => {
   server.close();
 });
