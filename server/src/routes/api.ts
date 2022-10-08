@@ -6,7 +6,7 @@ import {
 } from "./handlers/api";
 import { Router } from "express";
 
-export const apiRoutes = Router();
+const apiRoutes = Router();
 
 apiRoutes.post("/api/start-game", startGame);
 apiRoutes.patch("/api/submit-answer", submitAnswer);
