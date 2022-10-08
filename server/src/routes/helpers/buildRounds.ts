@@ -1,7 +1,7 @@
 import { CharacterList, Round, EmptyRound, Character } from "../../types";
 
 export const buildRounds = (characters: CharacterList): Round[] => {
-  let validCharacters = characters.filter(
+  const validCharacters = characters.filter(
     (character) => character.films.length > 0 || character.tvShows.length > 0
   );
   const [availableFilmsWithDupes, availableTvShowsWithDupes] =
@@ -19,14 +19,14 @@ export const buildRounds = (characters: CharacterList): Round[] => {
     );
   const availableFilms = [...new Set(availableFilmsWithDupes)];
   const availableTvShows = [...new Set(availableTvShowsWithDupes)];
-  let rounds: Round[] = [];
-  let characterIndexes: number[] = getUniqueArray(
+  const rounds: Round[] = [];
+  const characterIndexes: number[] = getUniqueArray(
     validCharacters.length,
     [],
     10
   );
   characterIndexes.forEach((characterIndex) => {
-    let character = validCharacters[characterIndex];
+    const character = validCharacters[characterIndex];
     let round: EmptyRound = {
       character: {
         name: character.name,
@@ -79,7 +79,7 @@ const getOptionsAndCorrectAnswerForCharacter = (
     character[medium].length > 1
       ? character[medium][Math.floor(Math.random() * character[medium].length)]
       : character[medium][0];
-  let validOptions = availableArray.filter(
+  const validOptions = availableArray.filter(
     (option) => !character[medium].includes(option)
   );
   round.options = getUniqueArray(
@@ -98,7 +98,7 @@ const getUniqueArray = (
   desiredLength: number,
   arrayToReadFrom: any[] = undefined
 ): any[] => {
-  let randomNum = Math.floor(Math.random() * topOfRange);
+  const randomNum = Math.floor(Math.random() * topOfRange);
   if (arrayToReadFrom) {
     if (!uniqueArray.includes(arrayToReadFrom[randomNum])) {
       uniqueArray.push(arrayToReadFrom[randomNum]);

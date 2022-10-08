@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { createUserGameData } from "../../helpers";
-import { cache } from "../../../index";
+import { cache } from "../../../../index";
 import { UserData } from "../../../types";
 
 export const resetGame = (req: Request, res: Response): void => {

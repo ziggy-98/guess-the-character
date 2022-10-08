@@ -9,12 +9,12 @@ export const createUserGameData = async (
     try {
       const characters = await getCharacters();
       if (characters) {
-        let rounds = buildRounds(characters as CharacterList);
+        const rounds = buildRounds(characters as CharacterList);
         resolve({
           [uuid]: {
             score: 0,
             round: 0,
-            rounds: rounds,
+            rounds,
           },
         } as UserData);
       }

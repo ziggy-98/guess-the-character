@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { UserDataObject } from "../../../types";
-import { cache } from "../../../";
+import { cache } from "../../../../index";
 
 export const getCurrentScore = (req: Request, res: Response): void => {
   if (req.query.uuid) {

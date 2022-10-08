@@ -5,10 +5,10 @@ export const getCharacters = async (): Promise<CharacterList | Error> => {
   return new Promise(async (resolve, reject) => {
     try {
       let characters: CharacterList = [];
-      let firstPage: CharacterResponse = (await getPage()) as CharacterResponse;
+      const firstPage: CharacterResponse = (await getPage()) as CharacterResponse;
       characters = characters.concat(firstPage.data);
-      let totalPages = firstPage.count;
-      let secondPage: CharacterResponse = (await getPage(
+      const totalPages = firstPage.count;
+      const secondPage: CharacterResponse = (await getPage(
         Math.floor(Math.random() * totalPages)
       )) as CharacterResponse;
       characters = characters.concat(secondPage.data);

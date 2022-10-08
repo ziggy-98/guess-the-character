@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { cache } from "../../../index";
+import { cache } from "../../../../index";
 import { createUserGameData } from "../../helpers";
 
 export const startGame = (req: Request, res: Response): void => {
   if (req.body.uuid) {
-    let userData = cache.get(req.body.uuid);
+    const userData = cache.get(req.body.uuid);
     if (userData) {
       res.send(userData);
     } else {
