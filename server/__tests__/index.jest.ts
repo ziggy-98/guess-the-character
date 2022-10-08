@@ -10,7 +10,7 @@ describe("Server startup", () => {
   it("Server starts up", (done) => {
     request(app)
       .get("/")
-      .expect(200)
+      .expect(302)
       .end((err, res) => {
         if (err) return done(err);
         expect(res).toMatchObject({});
