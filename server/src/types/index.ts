@@ -4,3 +4,4 @@ export { CharacterResponse } from "./characterResponse";
 export { Round, EmptyRound } from "./round";
 export { UserData } from "./userData";
 export { UserDataObject } from "./userDataObject";
+export { UserGameResponse } from "./userGameResponse";
