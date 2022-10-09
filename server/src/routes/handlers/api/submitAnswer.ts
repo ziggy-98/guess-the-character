@@ -10,11 +10,12 @@ export const submitAnswer = (req: Request, res: Response): void => {
       const newData = {
         ...oldData,
         score: correct ? oldData.score + 1 : oldData.score,
+        round: oldData.round + 1,
       };
       cache.set(req.body.uuid, newData);
       res.send({
         score: newData.score,
-        nextRound: newData.round + 1,
+        nextRound: newData.round,
         correctAnswer: req.body.round.correctAnswer,
         correct,
       });
