@@ -4,13 +4,13 @@ module.exports = function(grunt) {
       sass: {
         dist: {
           options: {
-            sourcemap: false,
+            sourcemap: 'none',
             compress: false,
             yuicompress: false,
-            style: 'expanded',
+            style: 'compressed',
           },
           files: {
-            'client/src/css/global.css' : 'client/src/scss/global.scss',
+            'client/src/index.css' : 'client/src/scss/global.scss',
           }
         },
       },
