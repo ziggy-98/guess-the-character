@@ -5,7 +5,7 @@ import { QuestionBar } from "../2-molecules/question-bar";
 import { useUserDataDispatch, useUserDataState } from "../../context/context";
 import { useNavigate } from "react-router-dom";
 import { setUserUuid } from "../../context/actions";
-import { UserData } from "server";
+import { UserGameResponse } from "server";
 
 export const StartScreen = () => {
   const context = useUserDataState();
@@ -16,7 +16,7 @@ export const StartScreen = () => {
     if (context.uuid) {
       UserDataApi.startGame(context.uuid)
         .then((res) => {
-          navigate(`/game/${(res as UserData)[context.uuid].round + 1}`);
+          navigate(`/game/${(res as UserGameResponse).round + 1}`);
         })
         .catch((err) => {
           console.log(err);
@@ -27,7 +27,7 @@ export const StartScreen = () => {
   const startGame = (e: MouseEvent) => {
     e.preventDefault();
     UserDataApi.startGame().then((res) => {
-      let uuid = Object.keys(res)[0];
+      let uuid = (res as UserGameResponse).uuid;
       setUserUuid(uuid, userDataDispatch).then(() => {
         navigate(`/game/1`);
       });
