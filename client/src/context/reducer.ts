@@ -16,6 +16,7 @@ export const UserDataReducer = (
   let newState = { ...initialState };
   switch (action.type) {
     case "SET_UUID":
+      localStorage.setItem("uuid", action.payload);
       return {
         ...newState,
         uuid: action.payload,
