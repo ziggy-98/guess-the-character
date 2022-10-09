@@ -16,7 +16,7 @@ const client = {
   output: {
     path: path.resolve(__dirname, "dist", "client"),
     filename: "assets/[name].js",
-    publicPath: "",
+    publicPath: "/",
   },
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
