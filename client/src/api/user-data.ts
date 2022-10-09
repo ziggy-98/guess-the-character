@@ -1,4 +1,4 @@
-import { UserGameResponse } from "server";
+import { Round, UserGameResponse } from "server";
 
 export const UserDataApi = {
   startGame: (uuid: string = undefined): Promise<UserGameResponse | Error> => {
@@ -13,7 +13,24 @@ export const UserDataApi = {
     });
   },
   submitAnswer: () => {},
-  resetGame: () => {},
+  resetGame: (uuid: string = undefined): Promise<UserGameResponse | Error> => {
+    return new Promise((resolve, reject) => {
+      fetch("/api/reset", {
+        method: "POST",
+        body: JSON.stringify({ uuid: uuid }),
+      })
+        .then((res) => res.json())
+        .then((res) => resolve(res))
+        .catch((err) => reject(err));
+    });
+  },
   getCurrentScore: () => {},
-  getCurrentRound: () => {},
+  getCurrentRound: (uuid: string): Promise<Round | Error> => {
+    return new Promise((resolve, reject) => {
+      fetch(`/api/round?uuid=${uuid ?? ""}`)
+        .then((res) => res.json())
+        .then((res) => resolve(res))
+        .catch((err) => reject(err));
+    });
+  },
 };
