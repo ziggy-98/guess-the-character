@@ -10,6 +10,8 @@ export const getCurrentScore = (req: Request, res: Response): void => {
     const score = userData ? userData.score : 0;
     res.send(score.toString());
   } else {
-    res.redirect("/error");
+    res.status(400).send({
+      message: "No uuid was supplied",
+    });
   }
 };

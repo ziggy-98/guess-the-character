@@ -14,7 +14,7 @@ export const resetGame = (req: Request, res: Response): void => {
       })
       .catch((err) => {
         console.log(err);
-        res.redirect("/error");
+        res.status(500).send(err);
       });
   }
 };

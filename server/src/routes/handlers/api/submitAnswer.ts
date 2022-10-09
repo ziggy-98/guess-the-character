@@ -18,6 +18,8 @@ export const submitAnswer = (req: Request, res: Response): void => {
       });
     }
   } else {
-    res.redirect("/error");
+    res.status(400).send({
+      message: "Either the round, answer, or uuid were not supplied",
+    });
   }
 };
