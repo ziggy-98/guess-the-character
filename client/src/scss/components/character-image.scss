@@ -1,0 +1,26 @@
+.characterImageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    figure {
+        height: auto;
+        width: 100%;
+        margin-bottom: .75rem;
+        span{
+            width: 100%;
+            img{
+                width: 100%;
+                max-width: 300px;
+                max-height: 230px;
+                display: block;
+                margin: auto;
+            }
+        }
+        figcaption{
+            font-size: 1.25rem;
+            padding-top: .25rem;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+}

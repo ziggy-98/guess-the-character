@@ -1,0 +1,13 @@
+.resultsContentContainer {
+    padding-top: 5rem;
+    text-align: center;
+    .finalScoreContainer{
+        .score{
+            display: block;
+            text-align: center;
+            font-size: 3rem;
+            padding: 1.5rem 0;
+            font-weight: bold;
+        }
+    }
+}
