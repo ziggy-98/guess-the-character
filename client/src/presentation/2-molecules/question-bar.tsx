@@ -9,8 +9,10 @@ interface Props {
 export const QuestionBar: FC<Props> = ({ text }) => {
   return (
     <div className="questionBar">
-      <QuestionText text={text} />
-      <UserScore />
+      <div className="container">
+        <QuestionText text={text} />
+        <UserScore />
+      </div>
     </div>
   );
 };

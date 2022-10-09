@@ -34,7 +34,7 @@ export const ErrorScreen: FC<Props> = () => {
   return (
     <React.Fragment>
       <QuestionBar text="Uh oh! There was a problem" />
-      <div className="errorBody">
+      <div className="errorBody container">
         <p>
           Looks like there was a problem with your game. We're sorry this has
           happened.

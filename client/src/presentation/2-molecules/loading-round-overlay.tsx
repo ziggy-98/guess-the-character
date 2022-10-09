@@ -9,12 +9,14 @@ interface Props {
 
 export const LoadingRoundOverlay: FC<Props> = ({ roundStartsIn, loaded }) => {
   return (
-    <React.Fragment>
-      {loaded ? (
-        <RoundStartingNumber number={roundStartsIn} />
-      ) : (
-        <p>Getting your round ready...</p>
-      )}
-    </React.Fragment>
+    <div className="loadingRoundOverlay">
+      <div className="container">
+        {loaded ? (
+          <RoundStartingNumber number={roundStartsIn} />
+        ) : (
+          <p>Getting your round ready...</p>
+        )}
+      </div>
+    </div>
   );
 };

@@ -20,18 +20,20 @@ export const ResultOverlay: FC<ResultsProps> = ({
     onClick(nextRound);
   };
   return (
-    <div className="resultsOverlay">
-      <p>Your answer was...</p>
-      <span className={correct ? "correct" : "incorrect"}>
-        {correct ? "Right!" : "Wrong!"}
-      </span>
-      {!correct && <p>The correct answer was: {correctAnswer}</p>}
-      <p>
-        {correct
-          ? "Well done! Press the button below to move on to the next round"
-          : "Maybe you'll have better luck on the next round?"}
-      </p>
-      <ContinueButton text="Next round" action={goToNextRound} />
+    <div className="resultOverlay">
+      <div className="container">
+        <p>Your answer was...</p>
+        <span className={correct ? "correct" : "incorrect"}>
+          {correct ? "Right!" : "Wrong!"}
+        </span>
+        {!correct && <p>The correct answer was: {correctAnswer}</p>}
+        <p>
+          {correct
+            ? "Well done! Press the button below to move on to the next round"
+            : "Maybe you'll have better luck on the next round?"}
+        </p>
+        <ContinueButton text="Next round" action={goToNextRound} />
+      </div>
     </div>
   );
 };

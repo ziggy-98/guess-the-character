@@ -15,9 +15,9 @@ export const AnswerButton: FC<Props> = ({
   onClick,
 }) => {
   const classes =
-    correct && answerChosen
+    correct && answerChosen !== undefined
       ? "correct active"
-      : !correct && answerChosen
+      : !correct && answerChosen !== undefined
       ? "incorrect active"
       : "inactive";
   return (

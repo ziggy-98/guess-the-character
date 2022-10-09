@@ -67,8 +67,8 @@ export const RoundScreen = () => {
     ) {
       if (timeLeft > 0) {
         timeLeftInterval = setInterval(() => {
-          setTimeLeft(timeLeft - 10);
-        }, 10);
+          setTimeLeft(timeLeft - 300);
+        }, 300);
       } else {
         const answer = roundData.options.find(
           (option) => option !== roundData.correctAnswer
@@ -142,22 +142,24 @@ export const RoundScreen = () => {
       {roundData && (
         <React.Fragment>
           <QuestionBar text="What film or tv show has this character been in?" />
-          {roundData?.character.name && roundData?.character.image && (
-            <CharacterImage
-              url={roundData.character.image}
-              alt={roundData.character.name}
+          <div className="container">
+            {roundData?.character.name && roundData?.character.image && (
+              <CharacterImage
+                url={roundData.character.image}
+                alt={roundData.character.name}
+              />
+            )}
+            <AnswerButtons
+              correctAnswer={roundData.correctAnswer}
+              answers={roundData.options}
+              answerChosen={answerCorrect}
+              onClick={chooseAnswer}
             />
-          )}
-          <AnswerButtons
-            correctAnswer={roundData.correctAnswer}
-            answers={roundData.options}
-            answerChosen={answerCorrect}
-            onClick={chooseAnswer}
-          />
-          <TimerBar
-            timeLeft={timeLeft}
-            answerChosen={answerCorrect !== undefined}
-          />
+            <TimerBar
+              timeLeft={timeLeft}
+              answerChosen={answerCorrect !== undefined}
+            />
+          </div>
         </React.Fragment>
       )}
       {answerCorrect !== undefined && <ResultOverlay {...resultsProps} />}

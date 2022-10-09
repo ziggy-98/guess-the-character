@@ -35,14 +35,14 @@ export const StartScreen = () => {
   };
   return (
     <div className="startScreen">
-      <QuestionBar text={"Welcome to guess the character!"} />
-      <p>
-        This game is a little quiz where you can test your knowledge of various
-        Disney Characters.
-      </p>
-      <p>Do you know what film or TV show each character is from?</p>
-      <p>Well then, let's get started! Press the start button below</p>
-      <ContinueButton text="Start" action={startGame} />
+      <QuestionBar
+        text={"Disney Fanatic? Test your knowledge with this quiz"}
+      />
+      <div className="container">
+        <p>Do you know what film or TV show each character is from?</p>
+        <p>Well then, let's get started! Press the start button below</p>
+        <ContinueButton text="Start" action={startGame} />
+      </div>
     </div>
   );
 };
