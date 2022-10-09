@@ -6,6 +6,10 @@ export const UserDataApi = {
       fetch("/api/start-game", {
         method: "POST",
         body: JSON.stringify({ uuid: uuid }),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
       })
         .then((res) => res.json())
         .then((res) => resolve(res))
@@ -18,6 +22,10 @@ export const UserDataApi = {
       fetch("/api/reset", {
         method: "POST",
         body: JSON.stringify({ uuid: uuid }),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
       })
         .then((res) => res.json())
         .then((res) => resolve(res))

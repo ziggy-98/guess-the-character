@@ -1,6 +1,7 @@
 import { UserData, CharacterList } from "../../types";
 import { getCharacters } from "./getCharacters";
 import { buildRounds } from "./buildRounds";
+import { cache } from "../../../index";
 
 export const createUserGameData = async (
   uuid: string
@@ -10,12 +11,14 @@ export const createUserGameData = async (
       const characters = await getCharacters();
       if (characters) {
         const rounds = buildRounds(characters as CharacterList);
+        const responseData = {
+          score: 0,
+          round: 0,
+          rounds,
+        };
+        cache.set(uuid, responseData);
         resolve({
-          [uuid]: {
-            score: 0,
-            round: 0,
-            rounds,
-          },
+          [uuid]: responseData,
         } as UserData);
       }
     } catch (err) {

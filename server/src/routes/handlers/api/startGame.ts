@@ -6,8 +6,8 @@ import { UserData, UserDataObject } from "server";
 
 export const startGame = async (req: Request, res: Response): Promise<void> => {
   return new Promise(async () => {
-    let uuid = "";
-    let round = 0;
+    let uuid: string;
+    let round: number;
     if (req.body.uuid) {
       uuid = req.body.uuid;
       const userData: UserDataObject = cache.get(req.body.uuid);
@@ -30,9 +30,11 @@ export const startGame = async (req: Request, res: Response): Promise<void> => {
         res.status(500).send(userDataResponse as Error);
       }
     }
-    res.set("Content-Type", "application/json").status(200).send({
-      uuid: uuid,
-      round: round,
-    });
+    if (round !== undefined && uuid !== undefined) {
+      res.set("Content-Type", "application/json").status(200).send({
+        uuid: uuid,
+        round: round,
+      });
+    }
   });
 };
