@@ -278,12 +278,15 @@ describe("Get Round", () => {
         if (err) return done();
         expect(JSON.parse(res.text)).toEqual(
           expect.objectContaining({
-            character: {
-              name: testRound.character.name,
-              image: testRound.character.image,
-            },
-            options: testRound.options,
-            correctAnswer: testRound.correctAnswer,
+            roundNumber: testUserData[testUuid].round,
+            round: expect.objectContaining({
+              character: {
+                name: testRound.character.name,
+                image: testRound.character.image,
+              },
+              options: testRound.options,
+              correctAnswer: testRound.correctAnswer,
+            }),
           })
         );
         done();

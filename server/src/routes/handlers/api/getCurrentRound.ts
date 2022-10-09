@@ -7,7 +7,14 @@ export const getCurrentRound = (req: Request, res: Response) => {
     const userData: UserDataObject = cache.get(req.query.uuid as string);
     if (userData) {
       const round = userData.rounds[userData.round];
-      res.send(round ?? {});
+      res.send(
+        round
+          ? {
+              roundNumber: userData.round,
+              round: round,
+            }
+          : {}
+      );
     } else {
       res.send({});
     }
