@@ -98,15 +98,10 @@ describe("Start game", () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        expect(JSON.parse(res.text)).toEqual(
-          expect.objectContaining({
-            [testUuid]: expect.objectContaining({
-              score: 0,
-              round: 0,
-              rounds: expect.any(Array),
-            }),
-          })
-        );
+        expect(JSON.parse(res.text)).toEqual({
+          uuid: testUuid,
+          round: 0,
+        });
         done();
       });
   });
@@ -121,7 +116,25 @@ describe("Start game", () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        expect(JSON.parse(res.text)).toEqual(testUserDataObject);
+        expect(JSON.parse(res.text)).toEqual({
+          uuid: testUuid,
+          round: testUserDataObject.round,
+        });
+        done();
+      });
+  });
+
+  it("Sends back a new uuid and round if no uuid was supplied", (done) => {
+    request(server)
+      .post("/api/start-game")
+      .send({ uuid: undefined })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(JSON.parse(res.text)).toEqual({
+          uuid: expect.any(String),
+          round: 0,
+        });
         done();
       });
   });
