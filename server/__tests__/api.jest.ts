@@ -226,11 +226,11 @@ describe("Submit answer", () => {
         if (err) return done(err);
         expect(JSON.parse(res.text)).toEqual(
           expect.objectContaining({
-            userData: expect.objectContaining({
-              score: testUserData[testUuid].score + 1,
-              round: testUserData[testUuid].round,
-              rounds: testUserData[testUuid].rounds,
-            }),
+            score: testUserData[testUuid].score + 1,
+            nextRound: testUserData[testUuid].round + 1,
+            correctAnswer:
+              testUserData[testUuid].rounds[testUserData[testUuid].round]
+                .correctAnswer,
             correct: true,
           })
         );
@@ -253,11 +253,11 @@ describe("Submit answer", () => {
         if (err) return done(err);
         expect(JSON.parse(res.text)).toEqual(
           expect.objectContaining({
-            userData: expect.objectContaining({
-              score: testUserData[testUuid].score,
-              round: testUserData[testUuid].round,
-              rounds: testUserData[testUuid].rounds,
-            }),
+            score: testUserData[testUuid].score,
+            nextRound: testUserData[testUuid].round + 1,
+            correctAnswer:
+              testUserData[testUuid].rounds[testUserData[testUuid].round]
+                .correctAnswer,
             correct: false,
           })
         );

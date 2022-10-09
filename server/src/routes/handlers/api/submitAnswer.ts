@@ -13,7 +13,9 @@ export const submitAnswer = (req: Request, res: Response): void => {
       };
       cache.set(req.body.uuid, newData);
       res.send({
-        userData: newData,
+        score: newData.score,
+        nextRound: newData.round + 1,
+        correctAnswer: req.body.round.correctAnswer,
         correct,
       });
     }
