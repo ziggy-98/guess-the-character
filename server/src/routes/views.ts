@@ -15,4 +15,8 @@ viewRoutes.get("/game/:round", (req, res) => {
   res.sendFile(path.resolve(__dirname, "client", "views", "index.html"), {});
 });
 
+viewRoutes.get("/error", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "views", "index.html"), {});
+});
+
 export default viewRoutes;
