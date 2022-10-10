@@ -1,0 +1,28 @@
+.questionBar{
+    border-bottom: 1px solid $grey;
+    padding: .75rem 0;
+    .container{
+        position: relative;
+    }
+    h1{
+        width: 80%;
+        color: black;
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin: auto;
+        margin-left: 0;
+        @media screen and (min-width: 800px) {
+            width: 100%;
+        }
+    }
+    .score{
+        position: absolute;
+        font-size: 1.3rem;
+        line-height: 1;
+        top: calc(50% - .65rem);
+        right: 1rem;
+        @media screen and (min-width: 1140px) {
+            right: 0;
+        }
+    }
+}

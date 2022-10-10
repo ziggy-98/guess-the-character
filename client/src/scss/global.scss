@@ -1,0 +1,78 @@
+@import 'variables';
+@import 'components/question-bar';
+@import 'components/continue-button';
+@import 'components/result-overlay';
+@import 'components/loading-round-overlay';
+@import 'components/answer-buttons';
+@import 'components/character-image';
+@import 'components/results-screen';
+@import 'components/timer-bar';
+
+* {
+    box-sizing: inherit;
+}
+
+body{
+font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1.2rem;
+  margin: 0;
+  padding-bottom: 6rem;
+}
+
+.container {
+    box-sizing: border-box;
+    display: block;
+    margin: auto;
+    max-width: 1140px;
+    padding: 0 1rem;
+    width: 100%;
+}
+
+.header{
+    box-shadow: 0 -1px 5px 0 $half-opaque;
+    position: relative;
+    z-index: 5;
+    .header-top{
+        background-color: $primary;
+        padding: 1rem 0;
+        .header-title{
+            font-family: 'Roboto Condensed', sans-serif;
+            text-transform: uppercase;
+            font-size: 2.5rem;
+            color: white;
+        }
+    }
+    .header-bottom{
+        background-color: $accent;
+        padding: .5rem 0;
+        width: 100%;
+    }
+}
+
+.footer{
+    position: fixed;
+    z-index: 5;
+    bottom: 0;
+    box-shadow: 0 -1px 5px 0 $half-opaque;
+    width: 100%;
+    .footer-top{
+        background-color: $accent;
+        padding: .5rem 0;
+    }
+    .footer-bottom{
+        background-color: $primary;
+        .thanks{
+            color: white;
+            text-align: right;
+            margin: 0;
+            padding: 1rem;
+            font-size: 1rem;
+            a{
+                color: white;
+                font-weight: bold;
+            }
+        }
+    }
+}

@@ -1,0 +1,41 @@
+.answerButtonContainer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    button{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48%;
+        min-height: 80px;
+        margin-bottom: .75rem;
+        transition: all ease-in-out 300ms;
+        box-shadow:0 0 8px 0 $half-opaque;
+        border-radius: 5px;
+        border: 0;
+        font-size: 1.25rem;
+        font-weight: bold;
+        cursor: pointer;
+        &.inactive {
+            background-color: $light-grey;
+            &:hover,&:focus {
+                background-color: $grey;
+                box-shadow: 0 0 12px 0 $half-opaque;
+            }
+        }
+        &.active{
+            &.correct {
+                background-color: $green;
+                color: white;
+            }
+            &.incorrect {
+                background-color: $red;
+                color: white;
+            }
+        }
+    }
+}

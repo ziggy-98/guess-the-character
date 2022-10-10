@@ -1,0 +1,11 @@
+.continueButton{
+    color: white;
+    background-color: $accent;
+    font-size: 1.75rem;
+    padding: 1.5rem 3rem;
+    font-weight: bold;
+    border: 0;
+    border-radius: 8px;
+    box-shadow: 0 0 10px $half-opaque;
+    cursor: pointer;
+}

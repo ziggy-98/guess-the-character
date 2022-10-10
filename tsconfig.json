@@ -5,16 +5,27 @@
         "target": "es6",
         "noImplicitAny": true,
         "moduleResolution": "node",
-        "sourceMap": true,
+        "sourceMap": false,
         "outDir": "dist",
         "baseUrl": ".",
+        "jsx": "react-jsx",
+        "resolveJsonModule": true,
         "paths": {
             "*": [
                 "node_modules/*"
+            ],
+            "server": [
+                "./server/src/types"
             ]
-        }
+        },
+        "typeRoots": ["./node_modules/@types"]
     },
     "include": [
-        "server/**/*"
+        "./server/**/*",
+        "./client/**/*"
+    ],
+    "exclude": [
+        "**/*.jest.**",
+        "**/__tests__/data"
     ]
 }
