@@ -25,57 +25,60 @@ export const RoundScreen = () => {
   useEffect(() => {
     let roundStartsInInterval: ReturnType<typeof setInterval>;
     let timeLeftInterval: ReturnType<typeof setInterval>;
-    if (round && !dataFetched && context.uuid) {
-      if (parseInt(round) === 11) {
-        navigate("/game/results");
-      } else {
-        UserDataApi.getCurrentRound(context.uuid)
-          .then((res) => {
-            if (Object.keys(res).length > 0) {
-              res = res as RoundResponse;
-              if (res.roundNumber !== parseInt(round) - 1) {
-                navigate(`/game/${res.roundNumber + 1}`);
+    if (round && context.uuid) {
+      if (!dataFetched) {
+        if (parseInt(round) === 11) {
+          navigate("/game/results");
+        } else {
+          UserDataApi.getCurrentRound(context.uuid)
+            .then((res) => {
+              if (Object.keys(res).length > 0) {
+                res = res as RoundResponse;
+                if (res.roundNumber !== parseInt(round) - 1) {
+                  navigate(`/game/${res.roundNumber + 1}`);
+                }
+                setRoundData(res.round as Round);
+                setDataFetched(true);
+              } else {
+                navigate("/game");
               }
-              setRoundData(res.round as Round);
-              setDataFetched(true);
-            } else {
-              navigate("/game");
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-            navigate("/error");
-          });
+            })
+            .catch((err) => {
+              console.log(err);
+              navigate("/error");
+            });
+        }
+      } else if (roundData && dataFetched && !roundStarted) {
+        if (roundStartsIn === 0) {
+          setTimeout(() => {
+            setRoundStarted(true);
+          }, 500);
+        } else {
+          roundStartsInInterval = setInterval(() => {
+            setRoundStartsIn(roundStartsIn - 1);
+          }, 1000);
+        }
+      } else if (
+        roundData &&
+        dataFetched &&
+        roundStarted &&
+        answerCorrect === undefined
+      ) {
+        if (timeLeft > 0) {
+          timeLeftInterval = setInterval(() => {
+            setTimeLeft(timeLeft - 300);
+          }, 300);
+        } else {
+          const answer = roundData.options.find(
+            (option) => option !== roundData.correctAnswer
+          );
+          chooseAnswer(answer);
+        }
       }
-    } else if (round && !dataFetched && !context.uuid) {
+    } else {
       navigate("/game");
-    } else if (roundData && dataFetched && !roundStarted) {
-      if (roundStartsIn === 0) {
-        setTimeout(() => {
-          setRoundStarted(true);
-        }, 500);
-      } else {
-        roundStartsInInterval = setInterval(() => {
-          setRoundStartsIn(roundStartsIn - 1);
-        }, 1000);
-      }
-    } else if (
-      roundData &&
-      dataFetched &&
-      roundStarted &&
-      answerCorrect === undefined
-    ) {
-      if (timeLeft > 0) {
-        timeLeftInterval = setInterval(() => {
-          setTimeLeft(timeLeft - 300);
-        }, 300);
-      } else {
-        const answer = roundData.options.find(
-          (option) => option !== roundData.correctAnswer
-        );
-        chooseAnswer(answer);
-      }
     }
+
     return () => {
       if (roundStartsInInterval !== undefined) {
         clearInterval(roundStartsInInterval);
