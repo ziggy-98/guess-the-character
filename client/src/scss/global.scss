@@ -8,8 +8,12 @@
 @import 'components/results-screen';
 @import 'components/timer-bar';
 
+* {
+    box-sizing: inherit;
+}
+
 body{
-    font-family: 'Roboto', sans-serif;
+font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 1.2rem;
@@ -18,10 +22,12 @@ body{
 }
 
 .container {
-    width: 100%;
-    padding: 0 1.5rem;
-    max-width: 1050px;
+    box-sizing: border-box;
+    display: block;
     margin: auto;
+    max-width: 1140px;
+    padding: 0 1rem;
+    width: 100%;
 }
 
 .header{
