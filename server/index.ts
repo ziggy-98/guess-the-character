@@ -5,7 +5,7 @@ import routes from "./src/routes";
 
 export const app = express();
 export const cache = new NodeCache({ stdTTL: 86400 });
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.static(path.resolve(__dirname, "client")));
 app.use(express.json());
